@@ -9,6 +9,13 @@
         margin: 0;
         background-color: #d3d3d34d;
       }
+        /* 다크 모드일 때 적용 */
+        @media (prefers-color-scheme: dark) {
+        body {
+                background-color: #121212;
+                color: #ffffff;
+        }
+        }
       *:focus {
         outline: none;
       }
