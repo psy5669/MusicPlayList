@@ -21,7 +21,7 @@
 
       #player-container {
         position: relative;
-        width: 400px;
+        width: 320px;
         height: 100px;
         margin: 100px 0px 10px 0px; /* 세로 간격 */
       }
@@ -293,7 +293,7 @@
 
       /*플레이리스트*/
       #playlist-container {
-        width: 380px;
+        width: 300px;
         margin: 0 auto;
         background: #fff;
         border-radius: 10px;
