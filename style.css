@@ -319,7 +319,8 @@
         background: #ffe8ee;
       }
 
-      #playlist li.active {
+       #playlist li.active {
         background: #fd6d94;
         color: white;
-        fo
+        font-weight: bold;
+      }
