@@ -1,0 +1,327 @@
+ * {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        font-family: Helvetica, Arial;
+        margin: 0;
+        background-color: #d3d3d34d;
+      }
+
+      *:focus {
+        outline: none;
+      }
+
+      #wrapper {
+        display: flex;
+        flex-direction: column; /* 세로 정렬 */
+        align-items: center; /* 가로 가운데 */
+      }
+
+      #player-container {
+        position: relative;
+        width: 320px;
+        height: 100px;
+        margin: 100px 0px 10px 0px; /* 세로 간격 */
+      }
+
+      #player {
+        position: relative;
+        height: 100%;
+        z-index: 3;
+      }
+
+      #player-track {
+        position: absolute;
+        top: 0;
+        right: 5px;
+        left: 5px;
+        padding: 13px 10px 20px 10px;
+        background-color: #fff7f7;
+        border-radius: 15px 15px 0 0;
+        transition: 0.3s ease top;
+        z-index: 1;
+      }
+
+      #player-track.active {
+        top: -80px;
+      }
+
+      #album-name {
+        color: #54576f;
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      #track-name {
+        color: #acaebd;
+        font-size: 12px;
+        margin-bottom: 5px;
+      }
+
+      #track-time {
+        height: 12px;
+        margin-bottom: 3px;
+        overflow: hidden;
+      }
+
+      #current-time {
+        float: left;
+      }
+
+      #track-length {
+        float: right;
+      }
+
+      #current-time,
+      #track-length {
+        color: transparent;
+        font-size: 11px;
+        background-color: #ffe8ee;
+        border-radius: 10px;
+        transition: 0.3s ease all;
+      }
+
+      #track-time.active #current-time,
+      #track-time.active #track-length {
+        color: #f86d92;
+        background-color: transparent;
+      }
+
+      #seek-bar-container,
+      #seek-bar {
+        position: relative;
+        height: 4px;
+        border-radius: 4px;
+      }
+
+      #seek-bar-container {
+        background-color: #ffe8ee;
+        cursor: pointer;
+      }
+
+      #seek-time {
+        position: absolute;
+        top: -29px;
+        color: #fff;
+        font-size: 12px;
+        white-space: pre;
+        padding: 5px 6px;
+        border-radius: 4px;
+        display: none;
+      }
+
+      #s-hover {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        opacity: 0.2;
+        z-index: 2;
+      }
+
+      #seek-time,
+      #s-hover {
+        background-color: #3b3d50;
+      }
+
+      #seek-bar {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        background-color: #fd6d94;
+        transition: 0.2s ease width;
+        z-index: 1;
+      }
+
+      #player-content {
+        position: relative;
+        height: 100%;
+        background-color: #fff;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        z-index: 2;
+      }
+
+      #album-art {
+        position: absolute;
+        top: 10px;
+        width: 80px;
+        height: 80px;
+        margin-left: 10px;
+        transform: rotateZ(0);
+        transition: 0.3s ease all;
+        box-shadow: 0 0 0 10px #fff;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+
+      #album-art:before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 0;
+        left: 0;
+        width: 13px;
+        height: 13px;
+        margin: -5px auto 0 auto;
+        background-color: #d6dee7;
+        border-radius: 50%;
+        box-shadow: inset 0 0 0 2px #fff;
+        z-index: 2;
+      }
+
+      #album-art img {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        z-index: -1;
+      }
+
+      #album-art img.active {
+        opacity: 1;
+        z-index: 1;
+      }
+
+      #album-art.active img.active {
+        z-index: 1;
+        animation: rotateAlbumArt 3s linear 0s infinite forwards;
+      }
+
+      @keyframes rotateAlbumArt {
+        0% {
+          transform: rotateZ(0);
+        }
+        100% {
+          transform: rotateZ(360deg);
+        }
+      }
+
+      #buffer-box {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        left: 0;
+        height: 13px;
+        color: #1f1f1f;
+        font-size: 13px;
+        font-family: Helvetica;
+        text-align: center;
+        font-weight: bold;
+        line-height: 1;
+        padding: 6px;
+        margin: -12px auto 0 auto;
+        background-color: rgba(255, 255, 255, 0.19);
+        opacity: 0;
+        z-index: 2;
+      }
+
+      #album-art img,
+      #buffer-box {
+        transition: 0.1s linear all;
+      }
+
+      #album-art.buffering img {
+        opacity: 0.25;
+      }
+
+      #album-art.buffering img.active {
+        opacity: 0.8;
+        filter: blur(2px);
+        -webkit-filter: blur(2px);
+      }
+
+      #album-art.buffering #buffer-box {
+        opacity: 1;
+      }
+
+      #player-controls {
+        width: 100%;
+        height: 100%;
+        padding-left: 10px;
+        overflow: hidden;
+      }
+
+      .button-controls {
+        padding: 10px 0px 0px 100px;
+      }
+
+      .control {
+        width: 33%;
+        float: left;
+        padding: 12px 0;
+      }
+
+      .button {
+        width: 25px;
+        height: 25px;
+        padding: 15px;
+        background-color: #fff;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      .button i {
+        display: block;
+        color: #d6dee7;
+        font-size: 26px;
+        text-align: center;
+        line-height: 1;
+      }
+
+      .button,
+      .button i {
+        transition: 0.2s ease all;
+      }
+
+      .button:hover {
+        background-color: #d6d6de;
+      }
+
+      .button:hover i {
+        color: #fff;
+      }
+
+      /*플레이리스트*/
+      #playlist-container {
+        width: 300px;
+        margin: 0 auto;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+      }
+
+      #playlist {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      #playlist li {
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+        border-radius: 10px;
+        font-size: 14px;
+        cursor: pointer;
+        color: #333;
+      }
+
+      #playlist li:hover {
+        background: #ffe8ee;
+      }
+
+      #playlist li.active {
+        background: #fd6d94;
+        color: white;
+        font-weight: bold;
+      }
