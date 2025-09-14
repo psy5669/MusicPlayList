@@ -320,7 +320,8 @@
       }
 
       #playlist li.active {
-        background: #fd6d94;
+/*         background: #fd6d94; */
+          backgroud: gray;
         color: white;
         font-weight: bold;
       }
